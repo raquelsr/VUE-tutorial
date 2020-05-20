@@ -4,7 +4,15 @@
   <ul>
     <li v-for="country of countries" :key="country.alpha3Code">
       {{country.name}}
-      <button v-on:click="showDetails(country.alpha3Code)">Ver</button>
+      <button v-on:click="showDetails(country)">Ver con boton</button>
+        <router-link
+          :to="{
+            name:'CountryDetail',
+            params:{countryCode: country.alpha3Code}
+          }"
+          >
+            <a>Ver con link</a>
+        </router-link>
     </li>
   </ul>
 </div>
@@ -12,6 +20,8 @@
 
 <script>
 import CountryService from '@/services/CountryService';
+// eslint-disable-next-line import/extensions
+import router from '../router/index.js';
 
 export default {
   name: 'CountryList',
@@ -33,8 +43,8 @@ export default {
           console.log(e);
         });
     },
-    showDetails(code) {
-      console.log(`Details of ${code}`);
+    showDetails(country) {
+      router.push({ name: 'CountryDetail', params: { countryCode: country.alpha3Code }, query: { country } });
     },
   },
   mounted() {
