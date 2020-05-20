@@ -4,6 +4,7 @@
   <ul>
     <li v-for="country of countries" :key="country.alpha3Code">
       {{country.name}}
+      <button v-on:click="showDetails(country.alpha3Code)">Ver</button>
     </li>
   </ul>
 </div>
@@ -26,11 +27,14 @@ export default {
     showAllCountries() {
       CountryService.getAll()
         .then((response) => {
-          this.countries = response.data;
+          this.countries = response;
         })
         .catch((e) => {
           console.log(e);
         });
+    },
+    showDetails(code) {
+      console.log(`Details of ${code}`);
     },
   },
   mounted() {
